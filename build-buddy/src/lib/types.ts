@@ -25,7 +25,12 @@ export type KeyConcept = {
     codeSegment: string;
 } 
 
+export type KeyConceptsProps = {
+    keyConcepts: KeyConcept[];
+}
+
 export type Question = {
+    id: string;
     prompt: string;
     choices: string[];
     correctIndex: number;
@@ -48,4 +53,35 @@ export type BuilderShellProps = {
     leftPanel: React.ReactNode;
     topRight: React.ReactNode;
     bottomRight: React.ReactNode;
+    middleRight: React.ReactNode;
+}
+
+export type CodeBoxProps = {
+    code: string;
+}
+
+export type ButtonVariant = "primary" | "secondary" | "ghost";
+export type ButtonSize = "sm" | "md" | "lg";
+
+export type ButtonProps = {
+    variant: ButtonVariant;
+    size: ButtonSize;
+    onClick: () => void;
+    children: React.ReactNode;
+    disabled?: boolean;
+}
+
+export type CodeEditorProps = {
+    editorText: string;
+    onChange: (code: string ) => void;
+    error?: string | null;
+}
+
+export type CodeDisplayProps = {
+    quizSpec: Quiz;
+}
+
+export type QuestionCardProps = {
+    question: Question;
+    correctIndex: number;
 }
