@@ -1,5 +1,8 @@
 import { KeyConcept } from "./types";
 import { Quiz } from "./types";
+import { Chat as ChatType } from "./types";
+import { CurrentChats } from "./types";
+
 
 export const KeyConceptsJsonQuizSpec: KeyConcept[] = [
     {
@@ -82,3 +85,30 @@ export const initialEditorText: string = `{
       },
     ],
   };
+
+  export const presetPillOptions: ChatType[] = [
+    {
+        id: "1",
+        message: "Add a new question",
+        chatType: "pill",
+        sender: "user",
+    },
+    {
+        id: "2",
+        message: "Change the quiz title",
+        chatType: "pill",
+        sender: "user",
+    },
+    {
+        id: "3",
+        message: "Add a new choice to each question",
+        chatType: "pill",
+        sender: "user",
+    },
+    {
+        id: "4",
+        message: "Change the correct answer for the first question",
+        chatType: "pill",
+        sender: "user",
+    }
+]

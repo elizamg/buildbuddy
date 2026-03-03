@@ -9,7 +9,10 @@ export default function CodeEditor(
 ) {
   return (
     <div className="rounded-xl border border-border bg-panel p-3">
-      <div className="flex justify-end p-3">
+      <div className="flex justify-between items-center p-3">
+      <h1 className="text-xl font-bold bg-gradient-to-r from-header-from to-header-to bg-clip-text text-transparent">
+        Code Editor
+      </h1>
         <Button variant="primary" size="md" onClick={onReset}>Reset to Original</Button>
       </div>
       <div className="rounded-xl border border-border bg-panel p-3">
