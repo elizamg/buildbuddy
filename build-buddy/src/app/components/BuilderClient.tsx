@@ -58,6 +58,13 @@ export default function BuilderClient({
     setError(null);
   };
 
+  const handleResetLesson = () => {
+    setEditorText(defaultEditorText);
+    setQuizSpec(defaultQuizSpec);
+    setError(null);
+    setCurrentChats([]);
+  };
+
   const handleSave = useCallback(async () => {
     setIsSaving(true);
     setSaveError(null);
@@ -209,6 +216,7 @@ export default function BuilderClient({
         header={
           <Header
             onSave={handleSave}
+            onResetLesson={handleResetLesson}
             isSaving={isSaving}
             saveError={saveError}
           />
