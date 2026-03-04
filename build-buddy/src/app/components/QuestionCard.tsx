@@ -27,7 +27,7 @@ export default function QuestionCard(
   };
 
   return (
-    <div className="flex flex-col gap-4 rounded-xl border border-border bg-panel p-5 text-foreground shadow-sm">
+    <div data-testid="question-card" className="flex flex-col gap-4 rounded-xl border border-border bg-panel p-5 text-foreground shadow-sm">
       <div className="text-sm leading-relaxed whitespace-pre-line text-foreground/90">
         {question.prompt}
       </div>

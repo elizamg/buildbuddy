@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { ChatProps } from "@/lib/types";
 
 export default function Chat(
-  { currentChats, presetPillOptions, onAddChat }: ChatProps
+  { currentChats, presetPillOptions, onAddChat, isLoading = false }: ChatProps
 ) {
   const [input, setInput] = useState("");
   const prevCountRef = useRef(0);
@@ -46,7 +46,7 @@ export default function Chat(
       {/* current chats */}
       <div ref={chatListRef} className="flex flex-col gap-3 min-h-0 flex-1 overflow-y-auto">
         {currentChats.length === 0 ? (
-          <p className="text-sm text-foreground/60">No messages yet.</p>
+          <p className="text-sm text-foreground/60">Ask me anything about your quiz!</p>
         ) : (
           currentChats.map((chat, index) => {
             const isNew = index >= prevCountRef.current;
@@ -54,6 +54,7 @@ export default function Chat(
             return (
               <div
                 key={chat.id}
+                data-testid="chat-message"
                 className={`rounded-lg px-3 py-2 text-sm ${
                   isNew ? "chat-message-enter" : ""
                 } ${
@@ -90,7 +91,7 @@ export default function Chat(
       <div className="flex gap-2">
         <input
           type="text"
-          placeholder="Ask a question..."
+          placeholder="Ask a question…"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleAdd()}
@@ -99,7 +100,8 @@ export default function Chat(
         <button
           type="button"
           onClick={handleAdd}
-          className="rounded-lg px-4 py-2.5 text-sm font-medium bg-accent text-white hover:bg-accent/90 active:scale-[0.98] transition-colors shrink-0"
+          disabled={isLoading}
+          className="rounded-lg px-4 py-2.5 text-sm font-medium bg-accent text-white hover:bg-accent/90 active:scale-[0.98] transition-colors shrink-0 disabled:opacity-50"
         >
           Send
         </button>
