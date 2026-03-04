@@ -93,5 +93,6 @@ export type QuestionCardProps = {
 export type ChatProps = {
     currentChats: CurrentChats;
     presetPillOptions: Chat[];
-    onAddChat: (chat: Chat) => void;
+    onAddChat: (chat: Chat) => Promise<void>;
+    isLoading?: boolean;
 }
