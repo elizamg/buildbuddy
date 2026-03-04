@@ -46,7 +46,10 @@ export type Chat = {
     id: string;
     message: string;
     chatType: "freeform" | "pill";
+    sender: "user" | "assistant";
 }
+
+export type CurrentChats = Chat[];
 
 export type BuilderShellProps = {
     header: React.ReactNode;
@@ -85,4 +88,10 @@ export type CodeDisplayProps = {
 export type QuestionCardProps = {
     question: Question;
     correctIndex: number;
+}
+
+export type ChatProps = {
+    currentChats: CurrentChats;
+    presetPillOptions: Chat[];
+    onAddChat: (chat: Chat) => void;
 }
