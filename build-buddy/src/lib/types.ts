@@ -73,7 +73,8 @@ export type ButtonProps = {
 
 export type CodeEditorProps = {
     editorText: string;
-    onChange: (code: string ) => void;
+    onChange: (code: string) => void;
+    onReset: () => void;
     error?: string | null;
 }
 
