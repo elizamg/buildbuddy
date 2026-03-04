@@ -11,7 +11,7 @@ import { initialEditorText } from "@/lib/jsonQuizSpec";
 import { useState } from "react";
 import { Quiz } from "@/lib/types";
 import { initialQuizSpec } from "@/lib/jsonQuizSpec";
-import { presetPillOptions } from "@/lib/jsonQuizSpec";
+import { presetPillOptions, pillResponses, randomQuizTitles } from "@/lib/jsonQuizSpec";
 import { Chat as ChatType } from "@/lib/types";
 
 export default function Home() {
@@ -43,28 +43,58 @@ export default function Home() {
   };
 
   const handleAddChat = (chat: ChatType) => {
-    setCurrentChats([...currentChats, chat]);
-    // check if chat is a pill
     if (chat.chatType === "pill") {
-      //modify the quiz spec based on the pill and modify code editor text to reflect the changes
+      // Add user pill + matching assistant response in one update
+      let pillResponse: ChatType | null = null;
+      let newSpec: Quiz | null = null;
       switch (chat.message) {
         case "Add a new question":
-          setQuizSpec({ ...quizSpec, questions: [...quizSpec.questions, { id: "new", prompt: "New question", choices: [], correctIndex: 0 }] });
-          setEditorText(editorText + "\n" + "  { \"prompt\": \"New question\", \"choices\": [], \"correctIndex\": 0 }");
+          newSpec = {
+            ...quizSpec,
+            questions: [
+              ...quizSpec.questions,
+              { id: crypto.randomUUID(), prompt: "New question", choices: [], correctIndex: 0 },
+            ],
+          };
+          pillResponse = pillResponses[0];
           break;
-        case "Change the quiz title":
-          setQuizSpec({ ...quizSpec, title: chat.message });
-          setEditorText(editorText + "\n" + "  \"title\": \"" + chat.message + "\"");
+        case "Change the quiz title": {
+          const newTitle =
+            randomQuizTitles[Math.floor(Math.random() * randomQuizTitles.length)];
+          newSpec = { ...quizSpec, title: newTitle };
+          pillResponse = pillResponses[1];
           break;
+        }
         case "Add a new choice to each question":
-          setQuizSpec({ ...quizSpec, questions: quizSpec.questions.map((question) => ({ ...question, choices: [...question.choices, "New choice"] })) });
-          setEditorText(editorText + "\n" + "  \"choices\": [...question.choices, \"New choice\"]");
+          newSpec = { ...quizSpec, questions: quizSpec.questions.map((question) => ({ ...question, choices: [...question.choices, "New choice"] })) };
+          pillResponse = pillResponses[2];
           break;
-        case "Change the correct answer for the first question":
-          setQuizSpec({ ...quizSpec, questions: quizSpec.questions.map((question, index) => index === 0 ? { ...question, correctIndex: 1 } : question) });
-          setEditorText(editorText + "\n" + "  \"correctIndex\": 1");
+        case "Change the correct answer for the first question": {
+          const first = quizSpec.questions[0];
+          const numChoices = first?.choices.length ?? 0;
+          const newCorrectIndex =
+            numChoices > 0 ? Math.floor(Math.random() * numChoices) : 0;
+          newSpec = {
+            ...quizSpec,
+            questions: quizSpec.questions.map((question, index) =>
+              index === 0 ? { ...question, correctIndex: newCorrectIndex } : question
+            ),
+          };
+          pillResponse = pillResponses[3];
           break;
+        }
       }
+      if (newSpec) {
+        setQuizSpec(newSpec);
+        setEditorText(JSON.stringify(newSpec, null, 2));
+      }
+      if (pillResponse) {
+        setCurrentChats((prev) => [...prev, chat, { ...pillResponse, id: crypto.randomUUID() }]);
+      } else {
+        setCurrentChats((prev) => [...prev, chat]);
+      }
+    } else {
+      setCurrentChats((prev) => [...prev, chat]);
     }
   };
 

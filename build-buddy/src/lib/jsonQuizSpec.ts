@@ -19,30 +19,15 @@ export const KeyConceptsJsonQuizSpec: KeyConcept[] = [
     }
 ]
 
+// initial editor text should have no comments so that source of truth is the quiz spec
 export const initialEditorText: string = `{
-    // --- Quiz Metadata ---
-    // "title" stores the name of your quiz.
     "title": "Animal Quiz 🐾",
-  
-    // "pointsPerQuestion" controls how many points
-    // a user earns for each correct answer.
     "pointsPerQuestion": 10,
-  
-    // --- Questions ---
-    // "questions" is an ARRAY (a list) of question objects.
-    // Each object represents one question in the quiz.
     "questions": [
       {
-        // Unique identifier for this question
         "id": "q-cat",
-  
-        // The question prompt shown to the user
         "prompt": "What sound does a cat make?",
-  
-        // Possible answer choices (an array of strings)
         "choices": ["Woof", "Meow", "Moo", "Quack"],
-  
-        // 0-based index of the correct answer
         "correctIndex": 1
       },
       {
@@ -86,6 +71,17 @@ export const initialEditorText: string = `{
     ],
   };
 
+  export const randomQuizTitles: string[] = [
+    "Animal Quiz 🐾",
+    "Trivia Time!",
+    "Quick Quiz",
+    "Test Your Knowledge",
+    "Fun Facts Quiz",
+    "Brain Teaser",
+    "Pop Quiz",
+    "Did You Know?",
+  ];
+
   export const presetPillOptions: ChatType[] = [
     {
         id: "1",
@@ -111,4 +107,32 @@ export const initialEditorText: string = `{
         chatType: "pill",
         sender: "user",
     }
+]
+
+// pill responses to be displayed in the chat
+export const pillResponses: ChatType[] = [
+    {
+        id: "5",
+        message: "Question added successfully",
+        chatType: "pill",
+        sender: "assistant",
+    },
+    {
+        id: "6",
+        message: "Quiz title changed successfully",
+        chatType: "pill",
+        sender: "assistant",
+    },
+    {
+        id: "7",
+        message: "New choice added successfully",
+        chatType: "pill",
+        sender: "assistant",
+    },
+    {
+        id: "8",
+        message: "Correct answer changed successfully",
+        chatType: "pill",
+        sender: "assistant",
+    },
 ]

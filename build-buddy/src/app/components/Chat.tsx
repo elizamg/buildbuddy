@@ -1,12 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ChatProps } from "@/lib/types";
 
 export default function Chat(
   { currentChats, presetPillOptions, onAddChat }: ChatProps
 ) {
   const [input, setInput] = useState("");
+  const prevCountRef = useRef(0);
+  const chatListRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    prevCountRef.current = currentChats.length;
+  }, [currentChats.length]);
+
+  useEffect(() => {
+    chatListRef.current?.scrollTo({ top: chatListRef.current.scrollHeight, behavior: "smooth" });
+  }, [currentChats]);
 
   const handleAdd = () => {
     const trimmed = input.trim();
@@ -34,22 +44,29 @@ export default function Chat(
       </h1>
 
       {/* current chats */}
-      <div className="flex flex-col gap-3 min-h-0 flex-1 overflow-y-auto">
+      <div ref={chatListRef} className="flex flex-col gap-3 min-h-0 flex-1 overflow-y-auto">
         {currentChats.length === 0 ? (
           <p className="text-sm text-foreground/60">No messages yet.</p>
         ) : (
-          currentChats.map((chat) => (
-            <div
-              key={chat.id}
-              className={`rounded-lg px-3 py-2 text-sm ${
-                chat.sender === "user"
-                  ? "bg-accent/15 text-accent border border-accent/30 ml-4"
-                  : "bg-background border border-border mr-4"
-              }`}
-            >
-              {chat.message}
-            </div>
-          ))
+          currentChats.map((chat, index) => {
+            const isNew = index >= prevCountRef.current;
+            const staggerDelay = isNew ? (index - prevCountRef.current) * 80 : 0;
+            return (
+              <div
+                key={chat.id}
+                className={`rounded-lg px-3 py-2 text-sm ${
+                  isNew ? "chat-message-enter" : ""
+                } ${
+                  chat.sender === "user"
+                    ? "bg-accent/15 text-accent border border-accent/30 ml-4"
+                    : "bg-background border border-border mr-4"
+                }`}
+                style={isNew ? { animationDelay: `${staggerDelay}ms` } : undefined}
+              >
+                {chat.message}
+              </div>
+            );
+          })
         )}
       </div>
 
@@ -73,7 +90,7 @@ export default function Chat(
       <div className="flex gap-2">
         <input
           type="text"
-          placeholder="Type a message..."
+          placeholder="Ask a question..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleAdd()}
