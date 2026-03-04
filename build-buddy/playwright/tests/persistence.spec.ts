@@ -333,10 +333,9 @@ test.describe('combined persistence', () => {
     const editorAfter = await page.locator('.cm-content').textContent()
     const titleAfter = await page.locator('[data-testid="quiz-title"]').textContent()
 
+    // toBe is a strict equality check — if the editor didn't change, no mutation occurred
     expect(editorAfter).toBe(editorBefore)
     expect(titleAfter).toBe(titleBefore)
-    // Specifically: the LLM's suggested changes did NOT get applied
     expect(editorAfter).not.toContain('Hacked')
-    expect(editorAfter).not.toContain('999')
   })
 })

@@ -143,6 +143,18 @@ export default function BuilderClient({
           chat,
           { ...pillResponse!, id: crypto.randomUUID() },
         ]);
+        // Persist pill messages to DB (fire-and-forget)
+        fetch("/api/messages", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            projectId,
+            messages: [
+              { role: "user", content: chat.message },
+              { role: "assistant", content: pillResponse.message },
+            ],
+          }),
+        }).catch(() => {});
       } else {
         setCurrentChats((prev) => [...prev, chat]);
       }
