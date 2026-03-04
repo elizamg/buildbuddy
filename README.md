@@ -1,5 +1,7 @@
 # BuildBuddy
 
+Depoloyed Link{https://buildbuddydep.vercel.app/}
+
 An AI-assisted quiz builder. Users write and edit a JSON quiz specification in a code editor, chat with an LLM about their quiz, and see a live rendered preview — all in one authenticated workspace that persists across sessions.
 
 ---
