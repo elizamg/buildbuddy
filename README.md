@@ -2,7 +2,14 @@
 
 Depoloyed Link: https://buildbuddydep.vercel.app
 
-An AI-assisted quiz builder. Users write and edit a JSON quiz specification in a code editor, chat with an LLM about their quiz, and see a live rendered preview — all in one authenticated workspace that persists across sessions.
+BuildBuddy was inspired by tutoring a young student I’ve worked with for several years who started learning programming at a very young age. One challenge I consistently noticed is that beginners often struggle to understand the fundamental concepts behind code, and with the rise of AI coding tools, this challenge is becoming even more significant: students can now generate working code quickly, but that doesn’t necessarily mean they understand how or why it works. This raises a broader question about how people should learn programming in a world where AI can write code. Instead of focusing only on generating solutions, learners need tools that help them experiment with program structure, observe how changes affect behavior, and ask questions about what the code is doing. BuildBuddy explores this idea by providing a simple environment where users can interact with structured program definitions and receive explanations about them. In the current MVP, I implemented a lesson centered around JSON and structured data, where a quiz is defined through a JSON specification that includes fields like the title, questions, answer choices, and correct answers. Users can modify this specification in a code editor, see a live preview of how the quiz behaves, and ask an AI assistant questions about the code or quiz structure, with the assistant designed to explain concepts rather than automatically modify the program.
+
+
+---
+
+## Authorship Statement
+
+I (Eliza) did not work on this project with any collaborators. I authored the bulk of the froend code with minimal contributions from Cursor/ ChatGPT. I used on Claude for the backend setup and test suite creation.
 
 ---
 
